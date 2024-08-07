@@ -27,6 +27,7 @@ private:
 	Bank& operator=(const Bank&);
 
 	int liquidity;
+	int nextAccountId;
 	Accounts clientAccounts;
 };
 

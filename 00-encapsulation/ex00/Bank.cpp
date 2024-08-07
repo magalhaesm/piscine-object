@@ -2,6 +2,7 @@
 
 Bank::Bank()
 	: liquidity(0)
+	, nextAccountId(0)
 {
 }
 
@@ -20,7 +21,12 @@ Bank& Bank::operator=(const Bank&)
 
 int Bank::createAccount(int initialBalance)
 {
-	return initialBalance;
+	Account* acc = new Account();
+	acc->id = nextAccountId++;
+	acc->value = initialBalance;
+	clientAccounts[acc->id] = acc;
+
+	return acc->id;
 }
 
 void Bank::deposit(int account, int value)
@@ -47,7 +53,7 @@ std::ostream& operator<<(std::ostream& p_os, const Bank& p_bank)
 	Accounts::const_iterator it = p_bank.clientAccounts.begin();
 	for (; it != p_bank.clientAccounts.end(); it++)
 	{
-		p_os << it->second << std::endl;
+		p_os << *it->second << std::endl;
 	}
 	return p_os;
 }
