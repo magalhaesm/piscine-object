@@ -21,28 +21,28 @@ Bank& Bank::operator=(const Bank&)
 
 int Bank::createAccount(int initialBalance)
 {
-	Account* acc = new Account();
-	acc->id = nextAccountId++;
-	acc->value = initialBalance;
-	clientAccounts[acc->id] = acc;
+	Account* acc = new Account(nextAccountId, initialBalance);
+	clientAccounts.push_back(acc);
+	nextAccountId++;
 
-	return acc->id;
+	return acc->getID();
 }
 
-void Bank::deposit(int account, int value)
+void Bank::deposit(int id, int value)
 {
-	clientAccounts[account]->id += value;
+	float fee = value * 0.05;
+	clientAccounts[id]->deposit(static_cast<int>(value - fee));
 }
 
-void Bank::withdraw(int account, int value)
+void Bank::withdraw(int id, int value)
 {
-	clientAccounts[account]->id -= value;
+	clientAccounts[id]->withdraw(value);
 }
 
-void Bank::deleteAccount(int account)
+void Bank::deleteAccount(int id)
 {
-	delete clientAccounts.at(account);
-	clientAccounts.erase(account);
+	delete clientAccounts[id];
+	clientAccounts[id] = NULL;
 }
 
 std::ostream& operator<<(std::ostream& p_os, const Bank& p_bank)
@@ -53,7 +53,7 @@ std::ostream& operator<<(std::ostream& p_os, const Bank& p_bank)
 	Accounts::const_iterator it = p_bank.clientAccounts.begin();
 	for (; it != p_bank.clientAccounts.end(); it++)
 	{
-		p_os << *it->second << std::endl;
+		p_os << **it << std::endl;
 	}
 	return p_os;
 }

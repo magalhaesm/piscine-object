@@ -1,12 +1,12 @@
 #ifndef BANK_HPP
 #define BANK_HPP
 
-#include <map>
+#include <vector>
 #include <iostream>
 
 #include "Account.hpp"
 
-typedef std::map<int, Account*> Accounts;
+typedef std::vector<Account*> Accounts;
 
 class Bank
 {
@@ -17,10 +17,10 @@ public:
 	~Bank();
 
 	int createAccount(int initialBalance);
-	void deposit(int account, int value);
-	void withdraw(int account, int value);
-	void giveLoan(int account, int value);
-	void deleteAccount(int account);
+	void deposit(int id, int value);
+	void withdraw(int id, int value);
+	void giveLoan(int id, int value);
+	void deleteAccount(int id);
 
 private:
 	Bank(const Bank&);

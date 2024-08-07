@@ -3,16 +3,17 @@
 
 #include <iostream>
 
-class Bank;
-
 class Account
 {
-	friend class Bank;
 	friend std::ostream& operator<<(std::ostream& p_os, const Account& p_account);
 
 public:
-	Account();
+	Account(int id, int value);
 	~Account();
+
+	const int& getID() const;
+	void deposit(int value);
+	void withdraw(int value);
 
 private:
 	int id;

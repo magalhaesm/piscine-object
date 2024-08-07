@@ -1,8 +1,8 @@
 #include "Account.hpp"
 
-Account::Account()
-	: id(-1)
-	, value(0)
+Account::Account(int id, int value)
+	: id(id)
+	, value(value)
 {
 }
 
@@ -17,6 +17,21 @@ Account::Account(const Account&)
 Account& Account::operator=(const Account&)
 {
 	return *this;
+}
+
+const int& Account::getID() const
+{
+	return id;
+}
+
+void Account::deposit(int value)
+{
+	this->value += value;
+}
+
+void Account::withdraw(int value)
+{
+	this->value -= value;
 }
 
 std::ostream& operator<<(std::ostream& p_os, const Account& p_account)
